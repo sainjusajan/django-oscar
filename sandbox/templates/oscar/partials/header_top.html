@@ -1,0 +1,53 @@
+{% load i18n %}
+
+
+<!-- header-top-area-start -->
+<div class="header-top-area ptb-15">
+    <div class="container">
+        <div class="row">
+            <!-- header-top-left-start -->
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <!-- social-icon-start -->
+                <div class="social-icon">
+                    <ul>
+                        <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i  class="fa fa-twitter"></i></a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Friend"><i class="fa fa-envelope-o"></i></a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Pinterest"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Google+"><i class="fa fa-google-plus"></i></a></li>
+                    </ul>
+                </div>
+                <!-- social-icon-end -->
+            </div>
+            <!-- header-top-left-end -->
+            <!-- header-top-right-start -->
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="header-account text-right">
+                    <ul>
+                        {% if user.is_authenticated %}
+                        <li>
+                            {% if num_unread_notifications > 0 %} {# If user has new notifications - we change account link to go to inbox #}
+                            <a href="{% url 'customer:notifications-inbox' %}">
+                                        <i class="icon-user"></i>
+                                        {% trans "Account" %}
+                                        <span class="label label-important">{{ num_unread_notifications }}</span>
+                                    </a> {% else %}
+                            <a href="{% url 'customer:summary' %}"><i class="icon-user"></i> {% trans "Account" %}</a> {% endif %}
+                        </li>
+                        {% if user.is_staff or perms.partner.dashboard_access %}
+                        <li><a href="{% url 'dashboard:index' %}"><i class="fa fa-dashboard"></i> {% trans 'Dashboard' %} </a></li>
+                        {% endif %}
+                        <li><a href="{% url 'customer:logout' %}"><i class="fa fa-sign-out"></i> {% trans 'Logout' %} </a></li>
+                        {% else %}
+                        <li><a href="{% url 'customer:login' %}" title="Login"><i class="pe-7s-lock"></i> {% trans 'Sign in / Register' %}</a></li>
+
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+            <!-- header-top-right-end -->
+        </div>
+    </div>
+</div>
+<!-- header-top-area-end -->

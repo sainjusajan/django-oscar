@@ -118,7 +118,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
-
+TEMPLATE_DIR = location('templates/')
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '$)a7n&o80u!6y5t-+jrd3)3!%vh&shg$wqpjpxc!ar&p#!)n1a'
 
@@ -127,7 +127,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             location('templates'),
-            oscar.OSCAR_MAIN_TEMPLATE_DIR,
+            location('templates/oscar')
+            # oscar.OSCAR_MAIN_TEMPLATE_DIR,
         ],
         'OPTIONS': {
             'loaders': [

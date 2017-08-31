@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load promotion_tags %}
+
+{% block styles %}
+    {% comment %}
+        If you are developing Oscar's CSS, or overriding Oscar's CSS
+        files in your project, then set USE_LESS = True in your
+        settings file. This will enable the on-the-fly less compiler.
+    {% endcomment %}
+    {% if use_less %}
+        <link rel="stylesheet/less" type="text/css" href="{% static "oscar/less/styles.less" %}" />
+    {% else %}
+        <link rel="stylesheet" type="text/css" href="{% static "oscar/css/styles.css" %}" />
+        <link rel="stylesheet" href="{% static "oscar/css/saree.css" %}">
+        <link rel="stylesheet" href="{% static "oscar/css/mixins.css" %}">
+        <link rel="stylesheet" href="{% static "oscar/style.css" %}">
+        <link rel="stylesheet" href="{% static "oscar/css/scss_styles.css" %}">
+        <link rel="stylesheet" href="{% static "oscar/css/responsive.css" %}">
+        
+    {% endif %}
+    <link rel="stylesheet" href="{% static "oscar/js/bootstrap-datetimepicker/bootstrap-datetimepicker.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "oscar/css/datetimepicker.css" %}" />
+{% endblock %}
+
+{% block layout %}
+    {# Top-horizontal bar with account, notifictions, dashboard links #}
+    {% include "partials/header_top.html" %}
+
+    
+<!-- header-mid-area-start -->
+<div class="header-mid-area ptb-50 p-b-25">
+        <div class="container">
+            <div class="row">
+                <!-- header-search-start -->
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="header-search">
+                        <form method="get" action="{% url 'search:search' %}">
+                            <i class="pe-7s-search"></i>
+                            {{ search_form.q }}
+                            <!-- <input type="text" placeholder="Search here" /> -->
+                        </form>
+                    </div>
+                </div>
+                <!-- header-search-end -->
+                <!-- logo-start -->
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="logo text-center">
+                        <a href="{{ homepage_url }}"><img src="{% static 'oscar/img/logo.png' %}" alt="logo" /></a>
+                    </div>
+                </div>
+                <!-- logo-end -->
+                <!-- mini-cart-total-start -->
+                {% block mini_basket %}{% include "partials/mini_basket.html" %}{% endblock %}
+                <!-- mini-cart-end -->
+            </div>
+        </div>
+    </div>
+    <!-- header-mid-area-end -->
+
+
+
+    
+    {# Site logo/title, mini-basket, browse dropdown and searchbox #}
+    <header class="">
+        
+        {% block navigation %}
+            {% include "partials/nav_primary.html" %}
+        {% endblock %}
+    </header>
+
+
+    {# Main content of page - other layout templates may override this block #}
+    {% block content_wrapper %}
+        <div class="container page">
+            <div class="page_inner">
+                {% block breadcrumbs %}{% endblock %}
+                {% block header %}
+                    <div class="page-header action">
+                        <h1>{% block headertext %}{% endblock %}</h1>
+                    </div>
+                {% endblock %}
+                {% include "partials/alert_messages.html" %}
+                {% block subnavigation %}{% endblock %}
+                <div class="content">
+                    {% block subheader %}{% endblock subheader %}
+
+                    {# Render promotions #}
+                    <div id="promotions">
+                        {% for promotion in promotions_page %}
+                            {% render_promotion promotion %}
+                        {% endfor %}
+                    </div>
+
+                    {# Div exists for AJAX updates to entire content section #}
+                    <div id="content_inner">{% block content %}{% endblock %}</div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% include "partials/footer.html" %}
+{% endblock %}
+
+{% block cdn_scripts %}
+  {{ block.super }}
+  {% if use_less and debug %}
+    {# Load the on-the-fly less compiler. Never do this in production. #}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
+  {% endif %}
+{% endblock %}
+
+{# Local scripts #}
+{% block scripts %}
+    {{ block.super }}
+    <!-- Twitter Bootstrap -->
+    <script type="text/javascript" src="{% static "oscar/js/bootstrap3/bootstrap.min.js" %}"></script>
+    <!-- Oscar -->
+    <script src="{% static "oscar/js/oscar/ui.js" %}" type="text/javascript" charset="utf-8"></script>
+
+    <script src="{% static "oscar/js/bootstrap-datetimepicker/bootstrap-datetimepicker.js" %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static "oscar/js/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.all.js" %}" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+
+{% block extrascripts %}
+    {% include "partials/extrascripts.html" %}
+    {{ block.super }}
+{% endblock %}
+
+{% block onbodyload %}
+    {{ block.super }}
+    oscar.init();
+{% endblock %}

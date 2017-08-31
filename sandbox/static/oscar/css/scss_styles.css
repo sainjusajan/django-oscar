@@ -1,0 +1,14 @@
+.logo img {
+  max-width: 275px;
+  margin-top: -20px; }
+
+.fixed-header-area .logo img {
+  max-width: 218px;
+  margin-top: -8px; }
+
+.header-search form input {
+  width: initial;
+  display: initial;
+  box-shadow: initial; }
+  .header-search form input:focus {
+    box-shadow: initial; }
