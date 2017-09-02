@@ -56,3 +56,52 @@
     <!-- mean-menu-area-end -->
 
 
+
+
+<!-- mobile-menu-area-start -->
+<div class="mobile-menu-area hidden-md hidden-lg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mobile-menu">
+                        <nav id="mobile-menu-active">
+                            <ul id="nav">
+                                <li><a href="{% url 'catalogue:index' %}">All Products</a></li>
+                                
+                                {% category_tree depth=2 as tree_categories %}
+                                
+                                {% if tree_categories %}
+                                    {% for tree_category, info in tree_categories %}
+                                        {% if info.has_children  %}
+                                            <li><a href="{{ tree_category.get_absolute_url }}">{{ tree_category.name }}<i class="fa fa-angle-down"></i></a>
+                                                <ul>
+                                        {% else %}
+                                            <li><a href="{{ tree_category.get_absolute_url }}">{{ tree_category.name }}</a></li>
+                                        {% endif %}
+
+                                        {% for close in info.num_to_close %}
+                                            </ul></li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
+
+
+                                <!-- <li><a href="#">Shop</a>
+                                    <ul>
+                                        <li><a href="shop-full-width.html">Shop Full width</a></li>
+                                        <li><a href="shop-left-sidebar.html">Shop Left Sidebar</a></li>
+                                        <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
+                                    </ul>
+                                </li>
+                                 -->
+                                
+                            
+                                <!-- <li><a href="contact.html">Contact</a></li> -->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- mobile-menu-area-end -->

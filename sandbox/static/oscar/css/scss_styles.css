@@ -12,3 +12,9 @@
   box-shadow: initial; }
   .header-search form input:focus {
     box-shadow: initial; }
+
+.carousel-control {
+  top: 41%; }
+
+#body_wala {
+  min-height: 500px; }
