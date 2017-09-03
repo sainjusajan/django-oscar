@@ -39,11 +39,12 @@ nosetests.xml
 /htmlcov/*
 /.tox/*
 
+/oscar/
 # Sandbox content
 settings_local.py
-/sandbox/*.sqlite
+# /sandbox/*.sqlite
 /sandbox/assets/
-/sandbox/public/
+# /sandbox/public/
 /sandbox/whoosh_index/
 /sandbox/logs/
 /sandbox/static/oscar/node_modules/
