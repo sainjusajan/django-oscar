@@ -47,4 +47,5 @@ settings_local.py
 # /sandbox/public/
 /sandbox/whoosh_index/
 /sandbox/logs/
+/linux_oscar_env
 /sandbox/static/oscar/node_modules/
